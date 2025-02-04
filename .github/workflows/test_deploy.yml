@@ -1,0 +1,46 @@
+name: test_deploy
+on: push
+jobs:
+  lint:
+    runs-on: windows-latest
+    steps:
+      - name: get_code
+        uses: actions/checkout@v4
+      - name: install_nodejs
+        uses: actions/setup-node@v3
+        with:
+          node-version: 18
+      - name: install_dependencies
+        run: npm ci
+      - name: lint
+        run: npm lint
+  test:
+    needs:
+      - lint
+    runs-on: windows-latest
+    steps:
+      - name: get_code
+        uses: actions/checkout@v4
+      - name: install_nodejs
+        uses: actions/setup-node@v3
+        with:
+          node-version: 18
+      - name: install_dependencies
+        run: npm ci
+      - name: test
+        run: npm test
+  deploy:
+    needs:
+      - test
+    runs-on: windows-latest
+    steps:
+      - name: get_code
+        uses: actions/checkout@v4
+      - name: install_nodejs
+        uses: actions/setup-node@v3
+        with:
+          node-version: 18
+      - name: install_dependencies
+        run: npm ci
+      - name: deploy
+        run: npm deploy
