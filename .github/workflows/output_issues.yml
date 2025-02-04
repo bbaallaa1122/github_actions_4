@@ -1,0 +1,14 @@
+name: output_issue
+on: issues
+jobs:
+  issue:
+    runs-on: windows-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+      - name: display-output
+        shell: pwsh
+        run: echo '${{ toJson(github.event) }}'
+
+
+      
